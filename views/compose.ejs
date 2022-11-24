@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Compose</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/igmtink/igmt-css/css/igmtink-css-reset.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+
+    <%- include('partials/header'); -%>
+
+    <main class="compose-container">
+      <section class="container">
+        <form action="/compose" method="post">
+          <div>
+            <input type="text" name="titleInput" placeholder="Title" required />
+            <textarea
+              name="statusInput"
+              rows="7"
+              placeholder="What's on your mind?"
+              required
+            ></textarea>
+          </div>
+          <button type="submit">Publish</button>
+        </form>
+      </section>
+    </main>
+
+    <%- include('partials/footer'); -%>
+
+  </body>
+</html>

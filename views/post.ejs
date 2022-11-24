@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title><%= title %></title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/igmtink/igmt-css/css/igmtink-css-reset.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+
+    <%- include('partials/header'); -%>
+
+    <main>
+      <section class="container">
+        <form action="/delete" method="post" class="post-container">
+          <div class="status-container">
+            <h1><%= title %></h1>
+            <pre><%= status %></pre>
+          </div>
+          <button type="submit">Delete</button>
+        </form>
+      </section>
+    </main>
+
+    <%- include('partials/footer'); -%>
+
+  </body>
+</html>

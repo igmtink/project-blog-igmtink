@@ -121,6 +121,7 @@ form > button {
 
 .status-container {
   display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   gap: 1rem;
 }
 
@@ -128,6 +129,12 @@ form > button {
   font-weight: 500;
   font-size: 2rem;
   line-height: 2.25rem;
+
+  white-space: pre-wrap; /* Since CSS 2.1 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
 }
 
 .status-container > pre {

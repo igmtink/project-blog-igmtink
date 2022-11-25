@@ -2,18 +2,28 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const _ = require("lodash");
+const { functions } = require("lodash");
+
+mongoose.connect(
+  "mongodb+srv://admin-igmtink:alitabalno17@cluster0.cgdwmic.mongodb.net/blogDB"
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.set("view engine", "ejs");
 
-const timeline = [];
+const postSchema = new mongoose.Schema({ title: String, status: String });
+
+const Post = new mongoose.model("Post", postSchema);
 
 app.get("/", function (req, res) {
-  res.render("index", { timeline: timeline });
+  Post.find({}, function (err, foundItem) {
+    res.render("index", { timeline: foundItem });
+  });
 });
 
 app.get("/compose", function (req, res) {
@@ -23,21 +33,31 @@ app.get("/compose", function (req, res) {
 app.get("/post/:topic", function (req, res) {
   const topic = _.lowerCase(req.params.topic);
 
-  timeline.forEach(function (post) {
-    const storedTitle = _.lowerCase(post.title);
-
-    if (topic === storedTitle) {
-      res.render("post", { title: post.title, status: post.status });
-    }
+  Post.find({}, function (err, foundItem) {
+    foundItem.forEach(function (post) {
+      if (topic === _.lowerCase(post.title)) {
+        res.render("post", { title: post.title, status: post.status });
+      }
+    });
   });
 });
 
 app.post("/compose", function (req, res) {
-  const post = { title: req.body.titleInput, status: req.body.statusInput };
-
-  timeline.push(post);
+  const status = new Post({
+    title: req.body.titleInput,
+    status: req.body.statusInput,
+  });
+  status.save();
 
   res.redirect("/");
+});
+
+app.post("/delete", function (req, res) {
+  const itemTitle = req.body.deleteBtn;
+
+  Post.findOneAndDelete({ title: itemTitle }, function (err, foundItem) {
+    res.redirect("/");
+  });
 });
 
 app.listen(port, function () {

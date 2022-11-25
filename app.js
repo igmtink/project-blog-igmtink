@@ -30,15 +30,21 @@ app.get("/compose", function (req, res) {
   res.render("compose");
 });
 
-app.get("/post/:topic", function (req, res) {
-  const topic = _.lowerCase(req.params.topic);
+app.get("/post/:postId", function (req, res) {
+  // const topic = _.lowerCase(req.params.topic);
 
-  Post.find({}, function (err, foundItem) {
-    foundItem.forEach(function (post) {
-      if (topic === _.lowerCase(post.title)) {
-        res.render("post", { title: post.title, status: post.status });
-      }
-    });
+  // Post.find({}, function (err, foundItem) {
+  // foundItem.forEach(function (post) {
+  // if (topic === _.lowerCase(post.title)) {
+  // res.render("post", { title: post.title, status: post.status });
+  // }
+  // });
+  // });
+
+  const postId = req.params.postId;
+
+  Post.findById({ _id: postId }, function (err, post) {
+    res.render("post", { title: post.title, status: post.status });
   });
 });
 
@@ -47,9 +53,12 @@ app.post("/compose", function (req, res) {
     title: req.body.titleInput,
     status: req.body.statusInput,
   });
-  status.save();
 
-  res.redirect("/");
+  status.save(function (err) {
+    if (!err) {
+      res.redirect("/");
+    }
+  });
 });
 
 app.post("/delete", function (req, res) {

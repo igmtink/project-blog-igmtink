@@ -24,7 +24,7 @@
           <% timeline.forEach(function (post) { %>
             <li>
               <form action="/" method="post">
-                <a href="/post/ <%= post.title %>">
+                <a href="/post/<%= post._id %>">
                   <div>
                     <h1><%= post.title %></h1>
                     <pre><%= post.status %></pre>
